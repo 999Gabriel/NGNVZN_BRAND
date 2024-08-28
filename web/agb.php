@@ -5,44 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AGB</title>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="img/ngnvzn.png" type="image/png">
+    <link rel="icon" href="img/logo.png" type="image/png">
     <style>
         body {
             font-family: 'Lora', serif;
             margin: 0;
             padding: 0;
-            background: url('img/ngnvzn.png') no-repeat center center fixed;
-            background-size: cover;
-            color: #fff;
+            background-color: #fff; /* Weißer Hintergrund */
+            color: #000; /* Schwarzer Text */
         }
 
+        body {
+            font-family: 'Lora', serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff; /* Weißer Hintergrund für den gesamten Body */
+            color: #000; /* Textfarbe Schwarz */
+        }
+
+        /* Navbar Styling */
         .navbar {
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: #fff; /* Hintergrundfarbe der Navigation */
             padding: 10px 20px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-        }
-
-        .navbar .logo a {
-            font-size: 36px;
-            font-weight: bold;
-            color: #f8cdd3; /* Helles Pink */
-            text-decoration: none; /* Entfernt Unterstreichung */
+            transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Schatten für die Navigation */
         }
 
         .navbar .nav-links {
+            flex: 1;
             display: flex;
+            align-items: center;
             gap: 15px;
-            margin-right: 20px;
+            position: absolute;
+            left: 20px; /* Abstand von der linken Seite */
         }
 
-        .navbar .nav-links a {
-            color: #f8cdd3;
+        .nav-links a {
+            color: #000; /* Schriftfarbe Schwarz */
             text-decoration: none;
             font-size: 18px;
             padding: 10px;
@@ -50,9 +55,20 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
-        .navbar .nav-links a:hover {
-            background-color: #f8cdd3;
-            color: #000;
+        .nav-links a:hover {
+            background-color: #000;
+            color: #fff;
+        }
+
+        .logo {
+            flex: 1;
+            display: flex;
+            justify-content: center; /* Zentriert das Logo innerhalb des Containers */
+        }
+
+        .logo img {
+            max-height: 100px; /* Maximale Höhe des Logos */
+            height: auto;
         }
 
         .container {
@@ -61,28 +77,53 @@
             max-width: 1200px; /* Maximalbreite für größere Bildschirme */
             margin: 80px auto 20px;
             padding: 20px;
-            background-color: rgba(0, 0, 0, 0.6);
+            background-color: #fff; /* Weißer Hintergrund für Container */
+            color: #000; /* Schwarzer Text für Container */
+            border: 1px solid #ccc; /* Grauer Rand */
             border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Sanfte Schatten */
+            transition: box-shadow 0.3s; /* Animation für Box-Schatten */
+        }
+
+        .container:hover {
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.3); /* Stärkerer Schatten bei Hover */
         }
 
         h1 {
-            font-size: 24px; /* Größe für den Titel */
+            font-size: 28px; /* Größe für den Titel */
             font-weight: bold;
             text-align: center;
-            color: #f8cdd3; /* Helles Pink */
+            color: #000; /* Schwarzer Text für Titel */
             margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 20px; /* Größe für Unterüberschriften */
+            font-weight: bold;
+            color: #000; /* Schwarzer Text für Unterüberschriften */
+            margin-top: 20px;
+            margin-bottom: 10px;
         }
 
         p {
             font-size: 16px; /* Textgröße */
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             line-height: 1.6;
+        }
+
+        a {
+            color: #000; /* Schwarzer Text für Links */
+            text-decoration: underline;
+            transition: color 0.3s; /* Animation für Textfarbe */
+        }
+
+        a:hover {
+            color: #555; /* Grauton bei Hover */
         }
 
         .footer {
             background-color: rgba(0, 0, 0, 0.8);
-            color: #f8cdd3; /* Helles Pink */
+            color: #fff; /* Weißer Text für Footer */
             text-align: center;
             padding: 15px;
             position: relative;
@@ -94,14 +135,16 @@
 <body>
 
 <!-- Navbar -->
-<div class="navbar">
-    <div class="logo"><a href="index.php">NGNVZN</a></div>
+<nav class="navbar">
     <div class="nav-links">
-        <a href="index.php">Startseite</a>
+        <a href="index.php">Über uns</a>
         <a href="produkte.php">Unsere Produkte</a>
         <a href="agb.php">AGB</a>
     </div>
-</div>
+    <div class="logo">
+        <a href="index.php"><img src="img/logo.png" alt="Markenlogo"></a> <!-- Hier das Logo einfügen -->
+    </div>
+</nav>
 
 <!-- Hauptinhalt -->
 <div class="container">
@@ -109,7 +152,7 @@
     <p>Willkommen zu den Allgemeinen Geschäftsbedingungen (AGB) von NGNVZN. Hier finden Sie alle relevanten Informationen und Bedingungen, die für die Nutzung unserer Website und den Kauf unserer Produkte gelten.</p>
 
     <h2>1. Geltungsbereich</h2>
-    <p>1.1 Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für alle Bestellungen, die über unseren Online-Shop auf <a href="http://www.dein-shop.de" style="color: #f8cdd3;">www.dein-shop.de</a> (nachfolgend „Online-Shop“ genannt) getätigt werden.</p>
+    <p>1.1 Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für alle Bestellungen, die über unseren Online-Shop auf <a href="http://www.dein-shop.de" style="color: #000000;">www.dein-shop.de</a> (nachfolgend „Online-Shop“ genannt) getätigt werden.</p>
     <p>1.2 Verbraucher im Sinne dieser AGB sind natürliche Personen, die ein Rechtsgeschäft zu einem Zweck abschließen, der weder ihrer gewerblichen noch selbständigen beruflichen Tätigkeit zugerechnet werden kann.</p>
 
     <h2>2. Vertragspartner</h2>
@@ -118,7 +161,7 @@
         Auweg 33<br>
         6112 Wattens<br>
         Österreich<br>
-        E-Mail: <a href="mailto:info@ngnvzn.com" style="color: #f8cdd3;">info@ngnvzn.com</a><br>
+        E-Mail: <a href="mailto:info@ngnvzn.com" style="color: black;">info@Ggooddontdie.com</a><br>
         Telefon: +43 06605022009</p>
 
     <h2>3. Angebot und Vertragsschluss</h2>
@@ -142,7 +185,7 @@
     <h2>7. Widerrufsrecht</h2>
     <p>7.1 Verbraucher haben das Recht, binnen 14 Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen.</p>
     <p>7.2 Die Widerrufsfrist beträgt 14 Tage ab dem Tag, an dem Sie oder ein von Ihnen benannter Dritter die Ware in Besitz genommen haben.</p>
-    <p>7.3 Um Ihr Widerrufsrecht auszuüben, müssen Sie uns (NGNVZN, Musterstraße 123, 12345 Musterstadt, Deutschland, E-Mail: <a href="mailto:info@dein-shop.de" style="color: #f8cdd3;">info@dein-shop.de</a>, Telefon: +49 123 456789) mittels einer eindeutigen Erklärung (z. B. ein mit der Post versandter Brief oder E-Mail) über Ihren Entschluss, diesen Vertrag zu widerrufen, informieren.</p>
+    <p>7.3 Um Ihr Widerrufsrecht auszuüben, müssen Sie uns (NGNVZN, Musterstraße 123, 12345 Musterstadt, Deutschland, E-Mail: <a href="mailto:info@dein-shop.de" style="color: black;">info@gooddontdie.com</a>, Telefon: +49 123 456789) mittels einer eindeutigen Erklärung (z. B. ein mit der Post versandter Brief oder E-Mail) über Ihren Entschluss, diesen Vertrag zu widerrufen, informieren.</p>
     <p>7.4 Im Falle eines Widerrufs haben wir Ihnen alle Zahlungen, die wir von Ihnen erhalten haben, einschließlich der Lieferkosten (mit Ausnahme der zusätzlichen Kosten, die sich daraus ergeben, dass Sie eine andere Art der Lieferung als die von uns angebotene Standardlieferung gewählt haben), unverzüglich und spätestens binnen 14 Tagen ab dem Tag zurückzuzahlen, an dem die Mitteilung über Ihren Widerruf dieses Vertrags bei uns eingegangen ist.</p>
 
     <h2>8. Mängelhaftung</h2>
@@ -161,7 +204,7 @@
 </div>
 <!-- Footer -->
 <footer class="footer">
-    <p>© 2024 NGNVZN. Alle Rechte vorbehalten.</p>
+    <p>© 2024 GOOD DON'T DIE. Alle Rechte vorbehalten.</p>
 </footer>
 </body>
 </html>
