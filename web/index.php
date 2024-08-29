@@ -374,7 +374,7 @@
     <div class="nav-links">
         <a href="index.php">Home</a>
         <a href="produkte.php">Produkte</a>
-        <a href="agb.php">Über Uns</a>
+        <a href="about.php">Über Uns</a>
         <a href="#">Kontakt</a>
         <a href="account.php">Mein Account/Login</a>
     </div>

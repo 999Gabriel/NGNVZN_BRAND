@@ -5,20 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0afd68c5-508e-4698-bb41-1264305f0113" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mail/bestellbestätigung.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mail/contact_form_template.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mail/newsletter_subscription_template.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mail/password_reset_template.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mail/shipment_notification_template.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/send_emails.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/about.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/contact.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/img/59A6CC45-EF8B-431F-AE59-5CD12D8EBA9A.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/img/IMG_3ADB64B73363-1.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/checkout.php" beforeDir="false" afterPath="$PROJECT_DIR$/web/checkout.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/account.php" beforeDir="false" afterPath="$PROJECT_DIR$/web/account.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/web/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/js/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/js/script.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/order_confirmation.php" beforeDir="false" afterPath="$PROJECT_DIR$/web/order_confirmation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/produkte.php" beforeDir="false" afterPath="$PROJECT_DIR$/web/produkte.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +115,7 @@
       <option name="presentableId" value="Default" />
       <updated>1724219328430</updated>
       <workItem from="1724219329793" duration="18850000" />
-      <workItem from="1724392452212" duration="39241000" />
+      <workItem from="1724392452212" duration="42630000" />
     </task>
     <servers />
   </component>

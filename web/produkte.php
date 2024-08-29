@@ -320,15 +320,72 @@ $cart_count = array_sum(array_column($cart_items, 'quantity')); // Gesamtanzahl 
         .product-size::-ms-expand {
             display: none; /* IE10-12 */
         }
-        /* Footer Styling */
+        /* Footer */
         .footer {
-            background-color: #000; /* Schwarzer Footer */
-            color: #fff; /* Weißer Text */
+            padding: 20px;
             text-align: center;
-            padding: 15px;
-            position: relative;
-            bottom: 0;
-            width: 100%;
+            background-color: #000;
+            /* Schwarzer Footer */
+            color: #fff; / Weißer Text */
+        }
+        .footer p {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .footer a {
+            color: #fff; /* Weißer Text für Links */
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer .newsletter-form input[type="email"], .footer .newsletter-form button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            margin: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .footer .newsletter-form input[type="email"]:focus, .footer .newsletter-form button:hover {
+            transform: scale(1.05);
+        }
+
+        .footer .newsletter-form input[type="email"] {
+            width: 60%;
+        }
+
+        .footer .newsletter-form button {
+            background-color: #fff;
+            color: #000;
+        }
+
+        .footer .feature {
+            display: inline-block;
+            width: 30%;
+            padding: 20px;
+            box-sizing: border-box;
+            color: #fff; /* Weißer Text für die Stärken */
+        }
+
+        .footer .feature img {
+            width: 80px; /* Kleinere Bildgröße für mehr Konsistenz */
+            height: 80px; /* Kleinere Bildgröße für mehr Konsistenz */
+            object-fit: cover; /* Stellt sicher, dass das Bild die Box vollständig ausfüllt */
+            margin-bottom: 10px;
+        }
+
+        .footer .feature h3 {
+            font-size: 20px;
+            margin: 10px 0;
+        }
+
+        .footer .feature p {
+            font-size: 14px;
         }
 
         /* Pagination */
@@ -450,6 +507,7 @@ $cart_count = array_sum(array_column($cart_items, 'quantity')); // Gesamtanzahl 
         .checkout-btn:hover {
             background-color: #333; /* Dunkleres Schwarz beim Hover */
         }
+
     </style>
 </head>
 <body>
@@ -457,9 +515,8 @@ $cart_count = array_sum(array_column($cart_items, 'quantity')); // Gesamtanzahl 
 <nav class="navbar">
     <div class="nav-links">
         <a href="index.php">Startseite</a>
-        <a href="about.php">Über uns</a>
-        <a href="faq.php">FAQ</a>
         <a href="account.php">Mein Account</a>
+        <a href="faq.php">FAQ</a>
     </div>
     <div class="logo">
         <a href="index.php"><img src="img/logo.png" alt="Markenlogo"></a>

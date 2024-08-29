@@ -246,8 +246,7 @@ $orders = $stmt_orders->fetchAll(PDO::FETCH_ASSOC);
         <div class="nav-links">
             <a href="index.php">Startseite</a>
             <a href="produkte.php">Produkte</a>
-            <a href="account.php">Mein Konto</a>
-            <a href="logout.php">Ausloggen</a>
+            <a href="agb.php">AGBs</a>
         </div>
     </nav>
 
