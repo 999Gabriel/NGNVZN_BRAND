@@ -53,7 +53,7 @@ foreach ($cart_items as $item) {
     $sizeId = $item['size_id'];
     $quantity = $item['quantity'];
 
-    $queryStr = "SELECT p.price FROM products p JOIN sizes s ON s.id = :size_id WHERE p.id = :product_id";
+    $queryStr = "SELECT p.price FROM products p JOIN product_sizes ps ON ps.id = :size_id WHERE p.id = :product_id";
     $query = $pdo->prepare($queryStr);
     $query->execute(['product_id' => $productId, 'size_id' => $sizeId]);
     $product = $query->fetch(PDO::FETCH_ASSOC);
@@ -76,26 +76,51 @@ $total += $shipping_cost;
 
 // Bestellung in der Datenbank speichern
 try {
-    $stmt = $pdo->prepare("INSERT INTO orders (name, address, city, zip, country, card_name, card_number, expiry_date, cvv, shipping, total) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->execute([$name, $address, $city, $zip, $country, $card_name, $card_number, $expiry_date, $cvv, $shipping, $total]);
-
+    // Bestellung speichern
+    $stmt = $pdo->prepare("INSERT INTO orders (customer_id, shipping_address, shipping_city, shipping_postal_code, shipping_country, total_amount, status) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->execute([null, $address, $city, $zip, $country, $total, 'pending']);
     $order_id = $pdo->lastInsertId();
 
-    // Bestellpositionen speichern
+    // Zahlungsdaten speichern
+    $stmt = $pdo->prepare("INSERT INTO payments (order_id, payment_date, amount, method, status) VALUES (?, NOW(), ?, 'credit_card', 'completed')");
+    $stmt->execute([$order_id, $total]);
+
     foreach ($cart_items as $item) {
         $productId = $item['product_id'];
         $sizeId = $item['size_id'];
         $quantity = $item['quantity'];
 
-        $stmt = $pdo->prepare("INSERT INTO order_items (order_id, product_id, size_id, quantity) VALUES (?, ?, ?, ?)");
-        $stmt->execute([$order_id, $productId, $sizeId, $quantity]);
+        // Holen Sie sich den Preis für das Produkt und die Größe
+        $queryStr = "SELECT p.price FROM products p JOIN product_sizes ps ON ps.id = :size_id WHERE p.id = :product_id";
+        $query = $pdo->prepare($queryStr);
+        $query->execute(['product_id' => $productId, 'size_id' => $sizeId]);
+        $product = $query->fetch(PDO::FETCH_ASSOC);
+
+        if ($product) {
+            $price = $product['price']; // Holen Sie den Preis des Produkts
+            // Sicherstellen, dass der size_id in der Tabelle `product_sizes` existiert
+            $stmt = $pdo->prepare("INSERT INTO order_items (order_id, product_id, product_size_id, quantity, price) VALUES (?, ?, ?, ?, ?)");
+            $stmt->execute([$order_id, $productId, $sizeId, $quantity, $price]);
+        }
     }
 
     // Warenkorb leeren
     unset($_SESSION['cart']);
 
+    // E-Mail senden
+    $to = '999gabriel.winkler@gmail.com'; // Hier sollte die tatsächliche E-Mail-Adresse des Kunden verwendet werden
+    $subject = 'Bestellbestätigung';
+    $message = "Vielen Dank für Ihre Bestellung, $name!\n\n";
+    $message .= "Ihre Bestellung #[{$order_id}] wurde erfolgreich aufgegeben.\n";
+    $message .= "Gesamtbetrag: €" . number_format($total, 2) . "\n\n";
+    $message .= "Mit freundlichen Grüßen,\nDas Team von GOOD DON'T DIE";
+    $headers = 'From: ceo.gooddontdie@gmail.com';
+
+    mail($to, $subject, $message, $headers);
+
     echo "<p>Vielen Dank für Ihre Bestellung! Ihre Bestell-ID lautet: $order_id</p>";
-} catch (PDOException $e) {
+} catch (PDOException $e)
+{
     echo 'Fehler bei der Bestellung: ' . $e->getMessage();
 }
 ?>
@@ -106,7 +131,6 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bestellbestätigung</title>
     <style>
-        /* Grundlegendes Styling für den gesamten Body */
         body {
             font-family: 'Lora', serif;
             margin: 0;
@@ -115,7 +139,6 @@ try {
             color: #333;
         }
 
-        /* Navbar-Styling */
         .navbar {
             padding: 10px 20px;
             display: flex;
@@ -130,7 +153,7 @@ try {
         }
 
         .navbar .logo img {
-            height: 40px; /* Höhe des Logos */
+            height: 40px;
             width: auto;
         }
 
@@ -190,9 +213,8 @@ try {
             font-weight: bold;
         }
 
-        /* Container für den Checkout-Bereich */
         .container {
-            margin-top: 80px; /* Abstand für die feste Navbar */
+            margin-top: 80px;
             width: 90%;
             max-width: 800px;
             margin: 80px auto 20px;
@@ -202,7 +224,6 @@ try {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        /* Überschrift für den Checkout-Bereich */
         h1 {
             font-size: 28px;
             font-weight: bold;
@@ -211,19 +232,16 @@ try {
             margin-bottom: 30px;
         }
 
-        /* Styling für Abschnitte */
         .section {
             margin-bottom: 20px;
         }
 
-        /* Styling für Labels */
         label {
             display: block;
             font-weight: bold;
             margin-bottom: 5px;
         }
 
-        /* Styling für Eingabefelder */
         input[type="text"] {
             width: 100%;
             padding: 10px;
@@ -232,7 +250,6 @@ try {
             border-radius: 5px;
         }
 
-        /* Styling für den Bestellabschluss-Button */
         .checkout-button {
             display: block;
             background-color: #000;
@@ -251,7 +268,6 @@ try {
             background-color: #333;
         }
 
-        /* Styling für die Bestellübersicht */
         .order-summary ul {
             list-style-type: none;
             padding: 0;
@@ -261,7 +277,6 @@ try {
             margin-bottom: 10px;
         }
 
-        /* Responsive Design für kleinere Bildschirme */
         @media (max-width: 768px) {
             .container {
                 width: 95%;
@@ -280,9 +295,20 @@ try {
     </style>
 </head>
 <body>
+<div class="navbar">
+    <div class="logo">
+        <a href="index.php"><img src="img/logo.png" alt="Logo"></a>
+    </div>
+    <div class="nav-links">
+        <a href="index.php">Startseite</a>
+        <a href="produkte.php">Produkte</a>
+        <a href="about_us.php">Über uns</a>
+        <a href="contact.php">Kontakt</a>
+    </div>
+</div>
 <div class="container">
     <h1>Vielen Dank für Ihre Bestellung!</h1>
-    <p>Ihre Bestell-ID lautet: <?php echo htmlspecialchars($_GET['order_id']); ?></p>
+    <p>Ihre Bestell-ID lautet: <?php echo htmlspecialchars($order_id); ?></p>
     <p>Wir haben Ihre Bestellung erhalten und werden sie so schnell wie möglich bearbeiten.</p>
     <a href="index.php" class="checkout-button">Zurück zur Startseite</a>
 </div>

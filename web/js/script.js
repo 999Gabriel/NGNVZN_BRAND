@@ -76,4 +76,4 @@ document.addEventListener('DOMContentLoaded', function() {
     closeCartPanel.addEventListener('click', function() {
         cartPanel.style.display = 'none';
     });
-}
+});

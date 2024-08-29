@@ -200,6 +200,54 @@ $shipping_cost = 5.00; // Standardversandkosten
                 padding: 8px;
             }
         }
+        /* Styling für die Auswahl der Versandart */
+        .shipping-options {
+            margin-bottom: 20px;
+        }
+
+        .shipping-options label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .shipping-options .option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .shipping-options input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .shipping-options .option span {
+            font-size: 16px;
+        }
+
+        /* Styling für den Bestellung abschließen Button */
+        .checkout-button {
+            display: block;
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 18px;
+            margin-top: 20px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .checkout-button:hover {
+            background-color: #333;
+            transform: scale(1.05); /* Vergrößert den Button leicht beim Hover */
+        }
+
+        .checkout-button:active {
+            transform: scale(0.95); /* Verkleinert den Button leicht beim Klicken */
+        }
     </style>
 </head>
 <body>
@@ -240,6 +288,9 @@ $shipping_cost = 5.00; // Standardversandkosten
                     $item_total = $product['price'] * $quantity;
                     $total += $item_total;
                     echo "<li>{$product['name']} ({$quantity} Stück): €" . number_format($item_total, 2) . "</li>";
+
+                    // Produktdetails für die E-Mail sammeln
+                    $orderDetails[] = "{$product['name']} ({$quantity} Stück): €" . number_format($item_total, 2);
                 }
             }
 
@@ -266,104 +317,49 @@ $shipping_cost = 5.00; // Standardversandkosten
             <li><strong>Gesamtsumme: €<?php echo number_format($total, 2); ?></strong></li>
         </ul>
     </div>
-    <form id="checkout-form" action="order_confirmation.php" method="POST">
-        <!-- Lieferdetails -->
-        <div class="section">
-            <h2>Lieferdetails</h2>
-            <label for="name">Vollständiger Name</label>
-            <input type="text" id="name" name="name" required>
-            <label for="address">Adresse</label>
-            <input type="text" id="address" name="address" required>
+    <form action="order_confirmation.php" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
 
-            <label for="city">Stadt</label>
-            <input type="text" id="city" name="city" required>
+        <label for="address">Adresse:</label>
+        <input type="text" id="address" name="address" required>
 
-            <label for="zip">Postleitzahl</label>
-            <input type="text" id="plz" name="PLZ" required>
-            <label for="country">Land</label>
-            <input type="text" id="country" name="country" required>
+        <label for="city">Stadt:</label>
+        <input type="text" id="city" name="city" required>
+
+        <label for="zip">Postleitzahl:</label>
+        <input type="text" id="zip" name="zip" required>
+
+        <label for="country">Land:</label>
+        <input type="text" id="country" name="country" required>
+
+        <!-- Abschnitt für die Auswahl der Versandart -->
+        <div class="shipping-options">
+            <label>Wählen Sie Ihre Versandart:</label>
+            <div class="option">
+                <input type="radio" id="standard" name="shipping" value="standard" checked>
+                <label for="standard"><span>Standardversand (5,00 €)</span></label>
+            </div>
+            <div class="option">
+                <input type="radio" id="express" name="shipping" value="express">
+                <label for="express"><span>Expressversand (15,00 €)</span></label>
+            </div>
         </div>
 
-        <!-- Zahlungsdetails -->
-        <div class="section">
-            <h2>Zahlungsdetails</h2>
-            <label for="card-name">Name auf der Karte</label>
-            <input type="text" id="card-name" name="card-name" required>
+        <label for="card-name">Name auf der Kreditkarte:</label>
+        <input type="text" id="card-name" name="card-name" required>
 
-            <label for="card-number">Kartennummer</label>
-            <input type="text" id="card-number" name="card-number" required>
+        <label for="card-number">Kreditkartennummer:</label>
+        <input type="text" id="card-number" name="card-number" required>
 
-            <label for="expiry-date">Gültig bis</label>
-            <input type="text" id="expiry-date" name="expiry-date" placeholder="MM/YY" required>
+        <label for="expiry-date">Ablaufdatum:</label>
+        <input type="text" id="expiry-date" name="expiry-date" required>
 
-            <label for="cvv">CVV</label>
-            <input type="text" id="cvv" name="cvv" required>
-        </div>
+        <label for="cvv">CVV:</label>
+        <input type="text" id="cvv" name="cvv" required>
 
-        <!-- Rabattcode -->
-        <div class="section">
-            <label for="discount-code">Rabattcode</label>
-            <input type="text" id="discount-code" name="discount-code">
-            <button type="button" onclick="applyDiscount()">Anwenden</button>
-        </div>
-
-        <!-- Versandoptionen -->
-        <div class="section">
-            <h2>Versandoptionen</h2>
-            <label><input type="radio" name="shipping" value="standard" checked> Standardversand (€5,00)</label><br>
-            <label><input type="radio" name="shipping" value="express"> Expressversand (€15,00)</label>
-        </div>
-
-        <button type="submit" class="checkout-button" id="submit-button">Bestellung abschließen</button>
-    </form>
+        <!-- Bestellung abschließen Button -->
+        <a href="order_confirmation.php" class="checkout-button">Bestellung abschließen</a>    </form>
 </div>
-<script src="https://js.stripe.com/v3/"></script>
-<script>
-    const stripe = Stripe('dein-stripe-publishable-key'); // Ersetze durch deinen echten Stripe-Publishable-Key
-
-    document.getElementById('checkout-form').addEventListener('submit', function (event) {
-        event.preventDefault();
-
-        // Stripe Token erstellen
-        stripe.createToken('card', {
-            number: document.getElementById('card-number').value,
-            exp_month: document.getElementById('expiry-date').value.split('/')[0],
-            exp_year: document.getElementById('expiry-date').value.split('/')[1],
-            cvc: document.getElementById('cvv').value
-        }).then(function (result) {
-            if (result.error) {
-                alert('Fehler: ' + result.error.message);
-            } else {
-                // Token hinzufügen und Formular übermitteln
-                const form = document.getElementById('checkout-form');
-                const hiddenInput = document.createElement('input');
-                hiddenInput.type = 'hidden';
-                hiddenInput.name = 'stripeToken';
-                hiddenInput.value = result.token.id;
-                form.appendChild(hiddenInput);
-
-                // Formular senden
-                form.submit();
-            }
-        });
-    });
-
-    function applyDiscount() {
-        const discountCode = document.getElementById('discount-code').value;
-        const validCodes = {
-            'SUMMER20': 20,
-            'WINTER10': 10
-        };
-        let total = parseFloat(document.querySelector('.order-summary strong').innerText.replace('Gesamtsumme: €', '').replace(',', '.'));
-        if (validCodes[discountCode]) {
-            const discount = validCodes[discountCode];
-            const discountAmount = (total * discount) / 100;
-            total -= discountAmount;
-            document.querySelector('.order-summary strong').innerText = 'Gesamtsumme: €' + total.toFixed(2);
-        } else {
-            alert('Ungültiger Rabattcode.');
-        }
-    }
-</script>
 </body>
 </html>

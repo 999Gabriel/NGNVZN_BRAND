@@ -17,7 +17,8 @@
         }
 
         /* Container für allgemeines Layout */
-        .container {
+        .container
+        {
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
@@ -514,6 +515,50 @@
         window.addEventListener('scroll', onScroll);
         onScroll(); // Initiale Überprüfung
     });
+</script>
+<script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID"></script>
+<div id="paypal-button-container"></div>
+<script>
+    paypal.Buttons({
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: '0.01' // Gesamtsumme des Einkaufs
+                    }
+                }]
+            });
+        },
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                alert('Transaktion abgeschlossen durch ' + details.payer.name.given_name);
+                // Hier Weiterleitung zur Bestätigungsseite
+                window.location.href = "order_confirmation.php";
+            });
+        }
+    }).render('#paypal-button-container');
+</script>
+<script src="https://x.klarnacdn.net/kp/lib/v1/api.js" async></script>
+<div id="klarna-payments-container"></div>
+<script>
+    Klarna.Payments.init({
+        client_token: 'YOUR_CLIENT_TOKEN'
+    });
+
+    Klarna.Payments.load({
+        container: '#klarna-payments-container',
+        payment_method_category: 'pay_now'
+    }, function(res) {
+        if(res.show_form) {
+            // Zeige Klarna-Zahlungsformular
+        }
+    });
+</script>
+<script>
+    function sendEmail($to, $subject, $message, $headers) {
+        // Verwende die PHP mail()-Funktion oder ein SMTP-Bibliothek wie PHPMailer oder SwiftMailer
+        mail($to, $subject, $message, $headers);
+    }
 </script>
 </body>
 </html>
