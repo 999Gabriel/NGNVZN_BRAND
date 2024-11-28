@@ -12,7 +12,7 @@ try {
     $pdo = new PDO($dsn, $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-    echo 'Verbindung fehlgeschlagen: ' . $e->getMessage();
+    echo 'Connection failed: ' . $e->getMessage();
     exit;
 }
 
@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = trim($_POST['password']);
 
     if (empty($username) || empty($email) || empty($password)) {
-        echo "Alle Felder sind erforderlich.";
+        echo "Username, email, and password are required.";
     } else {
         $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
@@ -35,9 +35,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 'email' => $email,
                 'password_hash' => $password_hash
             ]);
-            echo "Registrierung erfolgreich. <a href='login.php'>Jetzt einloggen</a>";
+            echo "Registration successful. <a href='login.php'>Login now</a>";
         } catch (PDOException $e) {
-            echo 'Fehler bei der Registrierung: ' . $e->getMessage();
+            echo 'Registration error: ' . $e->getMessage();
         }
     }
 }
@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         /* Navbar */
         .navbar {
-            padding: 10px 20px;
+            padding: 10px 10px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         .navbar .logo img {
-            height: 40px; /* Höhe des Logos */
+            height: 60px; /* Höhe des Logos */
             width: auto;
         }
 
@@ -211,12 +211,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <!-- Navbar -->
 <nav class="navbar">
     <div class="logo">
-        <a href="index.php">
+        <a href="landing_page.php">
             <img src="img/logo.png" alt="Logo">
         </a>
     </div>
     <div class="nav-links">
-        <a href="index.php">Startseite</a>
+        <a href="landing_page.php">Startseite</a>
         <a href="produkte.php">Produkte</a>
         <a href="account.php">Mein Konto</a>
         <a href="logout.php">Ausloggen</a>
@@ -236,6 +236,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <label for="password">Passwort:</label>
         <input type="password" id="password" name="password" required>
 
+
         <button type="submit">Registrieren</button>
     </form>
     <a href="login.php">Bereits registriert? Hier einloggen.</a>
@@ -243,7 +244,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!-- Footer -->
 <footer class="footer">
-    <p>&copy; 2024 MeinShop. Alle Rechte vorbehalten.</p>
+    <p>&copy; 2024 GOOD DON'T DIE. Alle Rechte vorbehalten.</p>
 </footer>
 </body>
 </html>

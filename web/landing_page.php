@@ -80,7 +80,7 @@
         .hero {
             background: url('img/future.jpg') no-repeat center center fixed; /* Hintergrundbild */
             background-size: cover;
-            padding: 600px 20px 50px;
+            padding: 730px 20px 50px;
             text-align: center;
             color: white;
         }
@@ -369,10 +369,10 @@
 <!-- Navigation -->
 <nav class="navbar">
     <div class="logo">
-        <a href="index.php">GOOD DON'T DIE</a>
+        <a href="landing_page.php">GOOD DON'T DIE</a>
     </div>
     <div class="nav-links">
-        <a href="index.php">Home</a>
+        <a href="landing_page.php">Home</a>
         <a href="produkte.php">Produkte</a>
         <a href="about.php">Über Uns</a>
         <a href="#">Kontakt</a>

@@ -1,54 +1,49 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+ini_set("display_errors", 1);
+ini_set("display_startup_errors", 1);
 error_reporting(E_ALL);
 
 // Datenbankverbindung herstellen
-$host = 'db';
-$dbname = 'ngnvzn_shop';
-$username = 'root';
-$password = 'macintosh';
+$host = "db";
+$dbname = "ngnvzn_shop";
+$username = "root";
+$password = "macintosh";
 $port = 3306;
 
 try {
     $dsn = "mysql:host=$host;dbname=$dbname;port=$port;charset=utf8";
     $pdo = new PDO($dsn, $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    error_log("Database connection successful");
 } catch (PDOException $e) {
-    echo 'Verbindung fehlgeschlagen: ' . $e->getMessage();
-    exit;
+    error_log("Verbindung fehlgeschlagen: " . $e->getMessage());
+    exit("Verbindung fehlgeschlagen: " . $e->getMessage());
 }
 
 // Produkte abrufen
-$queryStr = "SELECT p.id, p.name, p.description, p.price, p.image_url, c.name AS category
+$queryStr = "SELECT p.id, p.name, p.description, p.price, c.name AS category,
+                    GROUP_CONCAT(DISTINCT ps.size SEPARATOR ', ') AS product_sizes,
+                    GROUP_CONCAT(DISTINCT pi.image_url SEPARATOR ', ') AS product_images
              FROM products p
-             JOIN categories c ON p.category_id = c.id";
+             JOIN categories c ON p.category_id = c.id
+             LEFT JOIN product_sizes ps ON p.id = ps.product_id
+             LEFT JOIN product_images pi ON p.id = pi.product_id
+             GROUP BY p.id";
 $query = $pdo->prepare($queryStr);
 $query->execute();
 $products = $query->fetchAll(PDO::FETCH_ASSOC);
 
-// Größen abrufen
-$sizes = []; // Initialisiere die Variable als leeres Array
-
-try {
-    $sizeQueryStr = "SELECT id, name FROM sizes";
-    $sizeQuery = $pdo->prepare($sizeQueryStr);
-    $sizeQuery->execute();
-    $sizes = $sizeQuery->fetchAll(PDO::FETCH_ASSOC);
-
-    // Überprüfen, ob die Abfrage ein Ergebnis zurückgegeben hat
-    if (!$sizes) {
-        $sizes = []; // Leeres Array, wenn keine Größen vorhanden sind
-    }
-} catch (PDOException $e) {
-    echo 'Fehler beim Abrufen der Größen: ' . $e->getMessage();
-}
+// Log the fetched products
+error_log("Fetched products: " . print_r($products, true));
 
 // Warenkorb aus der Session abrufen
 session_start();
-$cart_items = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
-$cart_count = array_sum(array_column($cart_items, 'quantity')); // Gesamtanzahl der Artikel im Warenkorb
+$cart_items = isset($_SESSION["cart"]) ? $_SESSION["cart"] : [];
+$cart_count = array_sum(array_column($cart_items, "quantity"));
+
+// Gesamtanzahl der Artikel im Warenkorb
 ?>
+
 
 <!DOCTYPE html>
 <html lang="de">
@@ -58,6 +53,7 @@ $cart_count = array_sum(array_column($cart_items, 'quantity')); // Gesamtanzahl 
     <title>Unsere Produkte</title>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
     <link rel="icon" href="img/logo.png" type="image/png">
+    <link rel="stylesheet" href=css/styles.css>
     <style>
         body {
             font-family: 'Lora', serif;
@@ -68,7 +64,8 @@ $cart_count = array_sum(array_column($cart_items, 'quantity')); // Gesamtanzahl 
         }
 
         .navbar {
-            padding: 10px 20px;
+            margin-right: 0;
+            padding: 10px 0;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -81,7 +78,7 @@ $cart_count = array_sum(array_column($cart_items, 'quantity')); // Gesamtanzahl 
         }
 
         .navbar .logo img {
-            height: 40px; /* Höhe des Logos */
+            height: 60px; /* Höhe des Logos */
             width: auto;
         }
 
@@ -124,8 +121,21 @@ $cart_count = array_sum(array_column($cart_items, 'quantity')); // Gesamtanzahl 
         .navbar .search-cart {
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin-left: auto; /* Positioniert die Suchleiste und den Warenkorb nach rechts */
+            justify-content: flex-end; /* Stellen Sie sicher, dass der Inhalt am rechten Rand ausgerichtet ist */
+            padding-right: 0; /* Entfernt überflüssige Abstände auf der rechten Seite */
+            margin-right: 0; /* Entfernt überflüssige Abstände auf der rechten Seite */
+        }
+
+        .navbar .search-cart .cart-icon {
+            font-size: 24px;
+            color: #000;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 10px; /* Abstand zwischen Suchleiste und Warenkorb-Icon */
+            margin-right: 0; /* Entferne oder reduziere den rechten Abstand */
         }
 
         .navbar .search-cart input[type="text"] {
@@ -134,13 +144,6 @@ $cart_count = array_sum(array_column($cart_items, 'quantity')); // Gesamtanzahl 
             border-radius: 5px;
             font-size: 16px;
             width: 200px; /* Breite der Suchleiste */
-        }
-
-        .navbar .search-cart .cart-icon {
-            font-size: 24px;
-            color: #000;
-            cursor: pointer;
-            position: relative; /* Wichtige Positionierung für den Zähler */
         }
 
         .navbar .search-cart .cart-icon:hover {
@@ -161,13 +164,13 @@ $cart_count = array_sum(array_column($cart_items, 'quantity')); // Gesamtanzahl 
 
         .container {
             margin-top: 80px;
-            width: 90%;
+            width: 100%;
             max-width: 1200px;
             margin: 80px auto 20px;
             padding: 20px;
-            background-color: #f9f9f9; /* Heller Hintergrund für bessere Lesbarkeit */
+            background-color: #fff; /* Entfernt den grauen Hintergrund */
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sanfter Schatten für Tiefe */
+            box-shadow: none; /* Entfernt den Schatten */
         }
 
         h1 {
@@ -179,9 +182,9 @@ $cart_count = array_sum(array_column($cart_items, 'quantity')); // Gesamtanzahl 
         }
 
         .products-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 40px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Drei Spalten mit gleicher Breite */
+            gap: 20px;
             justify-content: center;
         }
 
@@ -191,20 +194,27 @@ $cart_count = array_sum(array_column($cart_items, 'quantity')); // Gesamtanzahl 
             overflow: hidden;
             transition: transform 0.3s, box-shadow 0.3s;
             cursor: pointer;
-            width: calc(50% - 20px); /* Zwei Produkte nebeneinander */
             text-align: center;
             padding: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sanfter Schatten für Tiefe */
-            margin-bottom: 20px;
+            /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sanfter Schatten für Tiefe */
             box-sizing: border-box; /* Einschluss von Padding in der Breite */
         }
 
         .product-card img {
             width: 100%;
             height: auto; /* Höhe automatisch anpassen */
-            max-height: 400px; /* Maximale Höhe für Konsistenz */
+            max-height: 300px; /* Maximale Höhe für Konsistenz */
             object-fit: cover; /* Bild zuschneiden, um den Container auszufüllen */
             transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: scale(1.05);
+            /*box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Stärkerer Schatten bei Hover */
+        }
+
+        .product-card:hover img {
+            transform: scale(1.1);
         }
 
         .product-name {
@@ -508,22 +518,56 @@ $cart_count = array_sum(array_column($cart_items, 'quantity')); // Gesamtanzahl 
             background-color: #333; /* Dunkleres Schwarz beim Hover */
         }
 
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            margin: auto;
+        }
+
+        .slides {
+            display: none;
+        }
+
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+        }
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
     </style>
 </head>
 <body>
 <!-- Navbar -->
 <nav class="navbar">
     <div class="nav-links">
-        <a href="index.php">Startseite</a>
+        <a href="landing_page.php">Startseite</a>
         <a href="account.php">Mein Account</a>
         <a href="faq.php">FAQ</a>
     </div>
     <div class="logo">
-        <a href="index.php"><img src="img/logo.png" alt="Markenlogo"></a>
+        <a href="landing_page.php"><img src="img/logo.png" alt="Markenlogo"></a>
     </div>
     <div class="search-cart">
         <input type="text" placeholder="Suche...">
-        <a href="#" class="cart-icon" id="cartIcon">🛒 <?php echo $cart_count > 0 ? "($cart_count)" : ""; ?></a> <!-- Link zum Warenkorb-Icon -->
+        <a href="#" class="cart-icon" id="cartIcon">🛒 <?php echo $cart_count > 0 ? "($cart_count)" : ""; ?></a>
     </div>
 </nav>
 <!-- Warenkorb Modal -->
@@ -539,32 +583,36 @@ $cart_count = array_sum(array_column($cart_items, 'quantity')); // Gesamtanzahl 
     <h1>Unsere Produkte</h1>
     <div class="products-grid">
         <?php foreach ($products as $product): ?>
-            <div class="product-card">
-                <img src="<?php echo htmlspecialchars($product['image_url']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
-                <h2 class="product-name"><?php echo htmlspecialchars($product['name']); ?></h2>
-                <p class="product-price">Preis: €<?php echo htmlspecialchars($product['price']); ?></p>
-                <p class="product-description"><?php echo htmlspecialchars($product['description']); ?></p>
-                <p><strong>Kategorie:</strong> <?php echo htmlspecialchars($product['category']); ?></p>
-
+            <div class="product-card" data-id="<?php echo htmlspecialchars($product["id"]); ?>">
+                <div class="slideshow-container">
+                    <?php foreach (explode(', ', $product['product_images']) as $index => $image): ?>
+                        <div class="slides">
+                            <img src="<?php echo htmlspecialchars($image); ?>" alt="<?php echo htmlspecialchars($product["name"]); ?>" style="width:100%">
+                        </div>
+                    <?php endforeach; ?>
+                    <a class="prev" onclick="plusSlides(-1, <?php echo $product['id']; ?>)">&#10094;</a>
+                    <a class="next" onclick="plusSlides(1, <?php echo $product['id']; ?>)">&#10095;</a>
+                </div>
+                <h2 class="product-name"><?php echo htmlspecialchars($product["name"]); ?></h2>
+                <p class="product-price">Preis: €<?php echo htmlspecialchars($product["price"]); ?></p>
+                <p class="product-description"><?php echo htmlspecialchars($product["description"]); ?></p>
+                <p><strong>Kategorie:</strong> <?php echo htmlspecialchars($product["category"]); ?></p>
                 <!-- Größe auswählen -->
-                <select class="product-size" data-id="<?php echo htmlspecialchars($product['id']); ?>">
+                <select class="product-size" data-id="<?php echo htmlspecialchars($product["id"]); ?>">
                     <option value="">Größe wählen</option>
-                    <?php foreach ($sizes as $size): ?>
-                        <option value="<?php echo htmlspecialchars($size['id']); ?>"><?php echo htmlspecialchars($size['name']); ?></option>
+                    <?php foreach (explode(', ', $product["product_sizes"]) as $size): ?>
+                        <option value="<?php echo htmlspecialchars($size); ?>"><?php echo htmlspecialchars($size); ?></option>
                     <?php endforeach; ?>
                 </select>
-
-                <button class="add-to-cart" data-id="<?php echo htmlspecialchars($product['id']); ?>">In den Warenkorb</button>
+                <button class="add-to-cart" data-id="<?php echo htmlspecialchars($product["id"]); ?>">In den Warenkorb</button>
             </div>
         <?php endforeach; ?>
     </div>
 </div>
-
 <!-- Footer -->
 <footer class="footer">
     <p>© 2024 GOOD DON'T DIE. Alle Rechte vorbehalten. | <a href="agb.php">AGB</a> | <a href="kontakt.php">Kontakt</a></p>
 </footer>
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const addToCartButtons = document.querySelectorAll('.add-to-cart');
@@ -573,34 +621,71 @@ $cart_count = array_sum(array_column($cart_items, 'quantity')); // Gesamtanzahl 
         const closeCartPanel = document.getElementById('closeCartPanel');
         const cartItemsContainer = document.getElementById('cartItems');
 
+        let slideIndices = {};
+
+        function showSlides(n, productId) {
+            let i;
+            let slides = document.querySelectorAll(`.product-card[data-id="${productId}"] .slides`);
+            if (!slideIndices[productId]) {
+                slideIndices[productId] = 1;
+            }
+            if (n > slides.length) { slideIndices[productId] = 1 }
+            if (n < 1) { slideIndices[productId] = slides.length }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slides[slideIndices[productId] - 1].style.display = "block";
+        }
+
+        window.plusSlides = function(n, productId) {
+            showSlides(slideIndices[productId] += n, productId);
+        }
+
+        document.querySelectorAll('.product-card').forEach(card => {
+            const productId = card.getAttribute('data-id');
+            showSlides(1, productId);
+            card.querySelector('.prev').addEventListener('click', function() {
+                plusSlides(-1, productId);
+            });
+            card.querySelector('.next').addEventListener('click', function() {
+                plusSlides(1, productId);
+            });
+        });
+
         function updateCartPanel() {
-            fetch('get_cart_items.php')
-                .then(response => response.json())
+            const url = '/get_cart_items.php'; // Ensure this URL is correct
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json(); // Get the response as JSON
+                })
                 .then(data => {
-                    if (data.cartItems) {
-                        cartItemsContainer.innerHTML = ''; // Lösche vorherige Einträge
+                    console.log('Cart items:', data);
+                    if (Array.isArray(data.cartItems)) {
+                        cartItemsContainer.innerHTML = '';
                         data.cartItems.forEach(item => {
                             const itemElement = document.createElement('div');
-                            itemElement.className = 'cart-item';
+                            itemElement.classList.add('cart-item');
+                            const imagesHtml = item.images.map(imageUrl => `<img src="${imageUrl}" alt="${item.name || 'No Image'}" style="width:50px;height:auto;">`).join('');
                             itemElement.innerHTML = `
-                            <div class="cart-item-image">
-                                <img src="${item.image_url}" alt="${item.name}">
-                            </div>
-                            <div class="cart-item-details">
-                                <p class="item-name">${item.name}</p>
-                                <p class="item-price">Preis: €${item.price}</p>
-                                <p class="item-quantity">Menge: ${item.quantity}</p>
-                                <p class="item-size">Größe: ${item.size}</p>
+                            <div class="item-images">${imagesHtml}</div>
+                            <div class="item-details">
+                                <p class="item-name">${item.name || 'No Name'}</p>
+                                <p class="item-price">€${item.price || '0.00'}</p>
+                                <p class="item-quantity">Quantity: ${item.quantity || '0'}</p>
+                                <p class="item-size">Size: ${item.size || 'N/A'}</p>
                             </div>
                         `;
                             cartItemsContainer.appendChild(itemElement);
                         });
                     } else {
-                        cartItemsContainer.innerHTML = '<p>Ihr Warenkorb ist leer.</p>';
+                        console.error('Error fetching cart items:', data.error);
                     }
                 })
                 .catch(error => {
-                    console.error('Fehler beim Abrufen der Warenkorb-Daten:', error);
+                    console.error('Error fetching cart data:', error);
                 });
         }
 
@@ -608,32 +693,40 @@ $cart_count = array_sum(array_column($cart_items, 'quantity')); // Gesamtanzahl 
             button.addEventListener('click', function() {
                 const productId = this.getAttribute('data-id');
                 const sizeSelect = this.previousElementSibling;
-                const sizeId = sizeSelect ? sizeSelect.value : '';
+                const size = sizeSelect ? sizeSelect.value : '';
 
-                if (!sizeId) {
-                    alert('Bitte wählen Sie eine Größe aus, bevor Sie das Produkt in den Warenkorb legen.');
+                if (!size) {
+                    alert('Please select a size before adding the product to the cart.');
                     return;
                 }
 
-                fetch('add_to_cart.php', {
+                console.log(`Adding product ${productId} with size ${size} to cart`);
+
+                fetch('/add_to_cart.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
                     },
-                    body: `product_id=${productId}&size_id=${sizeId}`
+                    body: `product_id=${productId}&size=${size}`
                 })
                     .then(response => response.json())
                     .then(data => {
+                        console.log('Response data:', data);
                         if (data.success) {
-                            updateCartPanel(); // Aktualisiere das Warenkorb-Modal
-                            cartPanel.classList.add('open'); // Öffne das Warenkorb-Modal
+                            console.log('Product added to cart successfully');
+                            updateCartPanel(); // Update the cart panel after adding a product
+                        } else {
+                            console.error('Error adding product to cart:', data.message);
                         }
+                    })
+                    .catch(error => {
+                        console.error('Error adding product to cart:', error);
                     });
             });
         });
 
         cartIcon.addEventListener('click', function() {
-            updateCartPanel(); // Aktualisiere das Warenkorb-Modal beim Öffnen
+            updateCartPanel(); // Update the cart panel when opening
             cartPanel.classList.toggle('open');
         });
 

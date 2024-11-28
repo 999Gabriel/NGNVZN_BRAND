@@ -28,7 +28,7 @@
         }
 
         .navbar {
-            padding: 10px 20px;
+            padding: 10px 10px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -40,14 +40,19 @@
             z-index: 1000;
         }
 
-        .navbar .logo img {
-            height: 40px;
-            width: auto;
+        /* Logo zentrieren */
+        .navbar .logo {
+            flex: 1;
+            display: flex;
+            justify-content: center;
         }
 
+        /* Nav-Links nach links verschieben */
         .navbar .nav-links {
             display: flex;
             gap: 15px;
+            flex: 1;
+            justify-content: flex-end; /* Positioniert die Links auf der rechten Seite */
         }
 
         .navbar .nav-links a {
@@ -212,17 +217,89 @@
         .footer .feature p {
             font-size: 14px;
         }
+
+        .navbar {
+            padding: 10px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        /* Logo zentrieren und kleiner machen */
+        .navbar .logo {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .navbar .logo img {
+            height: 60px; /* Höhe des Logos verkleinern */
+            width: auto;
+        }
+
+        /* Links linksbündig und rechtsbündig ausrichten */
+        .nav-links-left,
+        .nav-links-right {
+            display: flex;
+            gap: 15px;
+            flex: 1;
+        }
+
+        .nav-links-left {
+            justify-content: flex-start;
+        }
+
+        .nav-links-right {
+            justify-content: flex-end;
+        }
+
+        /* Stil für die Navigationslinks */
+        .nav-links-left a,
+        .nav-links-right a {
+            color: #000;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .nav-links-left a:hover,
+        .nav-links-right a:hover {
+            background-color: #000;
+            color: #fff;
+        }
+
     </style>
 </head>
 <body>
 <div class="navbar">
     <div class="logo">
-        <a href="index.php"><img src="img/logo.png" alt="GOOD DON'T DIE Logo"></a>
+        <a href="landing_page.php"><img src="img/logo.png" alt="GOOD DON'T DIE Logo"></a>
     </div>
     <div class="nav-links">
-        <a href="index.php">Startseite</a>
+        <a href="landing_page.php">Startseite</a>
         <a href="produkte.php">Shop</a>
-        <a href="about.php">Über uns</a>
+        <a href="account.php">Mein Account</a>
+        <a href="contact.php">Kontakt</a>
+    </div>
+</div>
+<div class="navbar">
+    <div class="nav-links-left">
+        <a href="landing_page.php">Startseite</a>
+        <a href="produkte.php">Shop</a>
+    </div>
+    <div class="logo">
+        <a href="landing_page.php"><img src="img/logo.png" alt="GOOD DON'T DIE Logo"></a>
+    </div>
+    <div class="nav-links-right">
+        <a href="account.php">Mein Account</a>
         <a href="contact.php">Kontakt</a>
     </div>
 </div>
@@ -240,7 +317,7 @@
         <img src="img/59A6CC45-EF8B-431F-AE59-5CD12D8EBA9A.jpg" alt="Gabriel Winkler">
         <div>
             <h3>Gabriel Winkler</h3>
-            <p>Founder and CEO</p>
+            <p>Co-Founder and CEO</p>
             <p>Gabriel ist der Gründer der Brand. Er ist außerdem für die gesamte IT und Business Seite zuständig, als auch hat er das Marketing völlig im Griff und gibt 100% jeden Tag um die Firma groß zu machen.</p>
         </div>
     </div>
@@ -248,19 +325,19 @@
         <img src="img/IMG_3ADB64B73363-1.jpeg" alt="Jonas Bishop">
         <div>
             <h3>Jonas Bishop</h3>
-            <p>Co-founder and Head of Design</p>
+            <p>Founder and Head of Design</p>
             <p>Jonas ist der kreative Kopf hinter den Designs und designt alles selber. Er ist immer Up to Date mit den neuesten Trends und ist daher immer perfekt Vorbereitet.</p>
         </div>
     </div>
     </div>
 
-    <div class="highlight">
+<!-- <div class="highlight">
         <h2>Unsere Werte</h2>
         <p>Wir glauben an Transparenz, Qualität und Nachhaltigkeit. Jeder Schritt in unserer Produktionskette wird sorgfältig überwacht, um sicherzustellen, dass wir nur das Beste für unsere Kunden liefern. Von der Auswahl der Stoffe bis zur Verpackung - unser Ziel ist es, Produkte anzubieten, die Sie lieben werden.</p>
     </div>
 
     <p>Vielen Dank für Ihren Besuch auf unserer Website und Ihr Interesse an GOOD DON'T DIE. Wenn Sie Fragen haben oder mehr über uns erfahren möchten, zögern Sie nicht, uns zu kontaktieren!</p>
-<!-- Footer Section -->
+-->
 <footer class="footer">
     <div class="newsletter-form">
         <h2>Abonniere unseren Newsletter</h2>

@@ -67,7 +67,7 @@
         }
 
         .logo img {
-            max-height: 100px; /* Maximale Höhe des Logos */
+            max-height: 60px; /* Maximale Höhe des Logos */
             height: auto;
         }
 
@@ -137,12 +137,12 @@
 <!-- Navbar -->
 <nav class="navbar">
     <div class="nav-links">
-        <a href="index.php">Über uns</a>
+        <a href="landing_page.php">Über uns</a>
         <a href="produkte.php">Unsere Produkte</a>
         <a href="agb.php">AGB</a>
     </div>
     <div class="logo">
-        <a href="index.php"><img src="img/logo.png" alt="Markenlogo"></a> <!-- Hier das Logo einfügen -->
+        <a href="landing_page.php"><img src="img/logo.png" alt="Markenlogo"></a> <!-- Hier das Logo einfügen -->
     </div>
 </nav>
 

@@ -26,7 +26,7 @@ public class ProductInserterApp extends Application
         grid.setHgap(10);
 
         // Logo-Bild laden
-        //Image logoImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/ngnvzn.png")));
+        //Image logoImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("./img/ngnvzn.png")));
         //ImageView logoImageView = new ImageView(logoImage);
         //logoImageView.setFitWidth(100);  // Passe die Größe des Logos an
         //logoImageView.setPreserveRatio(true);

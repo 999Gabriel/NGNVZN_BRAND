@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class ProductInserter {
 
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/ngnvzn_shop?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
+    private static final String DB_URL = "jdbc:mysql://192.168.247.2:3306/ngnvzn_shop?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
     private static final String USER = "root";
     private static final String PASS = "macintosh";
 
