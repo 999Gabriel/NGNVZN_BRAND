@@ -7,8 +7,8 @@ const app = express();
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '',
-    database: 'shop'
+    password: 'macintosh',
+    database: 'ngnvzn_shop'
 });
 
 // E-Mail-Sende-Funktion

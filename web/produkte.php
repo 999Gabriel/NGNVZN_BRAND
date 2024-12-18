@@ -53,7 +53,6 @@ $cart_count = array_sum(array_column($cart_items, "quantity"));
     <title>Unsere Produkte</title>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
     <link rel="icon" href="img/logo.png" type="image/png">
-    <link rel="stylesheet" href=css/styles.css>
     <style>
         body {
             font-family: 'Lora', serif;

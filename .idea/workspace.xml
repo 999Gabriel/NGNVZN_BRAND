@@ -5,81 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0afd68c5-508e-4698-bb41-1264305f0113" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/mysql/ngnvzn_shop/account.frm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql/ngnvzn_shop/account.ibd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql/ngnvzn_shop/newsletter_subscriptions.frm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql/ngnvzn_shop/newsletter_subscriptions.ibd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql/ngnvzn_shop/product_images.frm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql/ngnvzn_shop/product_images.ibd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tshirt.blend" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/get_cart_items.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/img/gdd_hoodie_back.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/img/gdd_hoodie_front.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/img/gdd_knitted_sweater.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/img/gdd_long-sleeve_back.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/img/gdd_long_sleeve.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/img/gdd_polo_back.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/img/gdd_polo_front.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/img/gdd_tshirt.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/img/gdd_tshirt_angel.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/img/gdd_tshirt_angel_front.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/img/gdd_tshirt_back.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/img/gdd_tshirt_engel.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/img/gdd_tshirt_engel_back.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/img/gdd_tshirt_front.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/img/gdd_tshirt_stars.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/img/gdd_tshirt_stars_back.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/img/gdd_wp.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/img/hated_everywhere_hoodie_back.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/img/hated_everywhere_hoodie_front.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/img/heaven_hell_tshirt.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/img/heaven_hell_tshirt_back.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/img/polo_gdd_back.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/img/polo_gdd_front.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysql/aria_log.00000001" beforeDir="false" afterPath="$PROJECT_DIR$/mysql/aria_log.00000001" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysql/aria_log_control" beforeDir="false" afterPath="$PROJECT_DIR$/mysql/aria_log_control" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysql/ib_buffer_pool" beforeDir="false" afterPath="$PROJECT_DIR$/mysql/ib_buffer_pool" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysql/ib_logfile0" beforeDir="false" afterPath="$PROJECT_DIR$/mysql/ib_logfile0" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysql/ibdata1" beforeDir="false" afterPath="$PROJECT_DIR$/mysql/ibdata1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql/mysql/innodb_index_stats.ibd" beforeDir="false" afterPath="$PROJECT_DIR$/mysql/mysql/innodb_index_stats.ibd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql/mysql/innodb_table_stats.ibd" beforeDir="false" afterPath="$PROJECT_DIR$/mysql/mysql/innodb_table_stats.ibd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql/ngnvzn_shop/categories.ibd" beforeDir="false" afterPath="$PROJECT_DIR$/mysql/ngnvzn_shop/categories.ibd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql/ngnvzn_shop/customers.ibd" beforeDir="false" afterPath="$PROJECT_DIR$/mysql/ngnvzn_shop/customers.ibd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql/ngnvzn_shop/order_items.frm" beforeDir="false" afterPath="$PROJECT_DIR$/mysql/ngnvzn_shop/order_items.frm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql/ngnvzn_shop/order_items.ibd" beforeDir="false" afterPath="$PROJECT_DIR$/mysql/ngnvzn_shop/order_items.ibd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql/ngnvzn_shop/orders.frm" beforeDir="false" afterPath="$PROJECT_DIR$/mysql/ngnvzn_shop/orders.frm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql/ngnvzn_shop/orders.ibd" beforeDir="false" afterPath="$PROJECT_DIR$/mysql/ngnvzn_shop/orders.ibd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql/ngnvzn_shop/payments.ibd" beforeDir="false" afterPath="$PROJECT_DIR$/mysql/ngnvzn_shop/payments.ibd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql/ngnvzn_shop/product_sizes.ibd" beforeDir="false" afterPath="$PROJECT_DIR$/mysql/ngnvzn_shop/product_sizes.ibd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql/ngnvzn_shop/products.frm" beforeDir="false" afterPath="$PROJECT_DIR$/mysql/ngnvzn_shop/products.frm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql/ngnvzn_shop/products.ibd" beforeDir="false" afterPath="$PROJECT_DIR$/mysql/ngnvzn_shop/products.ibd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql/ngnvzn_shop/sizes.frm" beforeDir="false" afterPath="$PROJECT_DIR$/mysql/ngnvzn_shop/sizes.frm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql/ngnvzn_shop/sizes.ibd" beforeDir="false" afterPath="$PROJECT_DIR$/mysql/ngnvzn_shop/sizes.ibd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql/ngnvzn_shop/users.frm" beforeDir="false" afterPath="$PROJECT_DIR$/mysql/ngnvzn_shop/users.frm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql/ngnvzn_shop/users.ibd" beforeDir="false" afterPath="$PROJECT_DIR$/mysql/ngnvzn_shop/users.ibd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ngnvzn/com/ngnvzn_brand/ProductInserter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ngnvzn/com/ngnvzn_brand/ProductInserter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ngnvzn/com/ngnvzn_brand/ProductInserterApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ngnvzn/com/ngnvzn_brand/ProductInserterApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/module-info.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ngnvzn/com/ngnvzn_brand/ProductInserter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ngnvzn/com/ngnvzn_brand/ProductInserter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/about.php" beforeDir="false" afterPath="$PROJECT_DIR$/web/about.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/account.php" beforeDir="false" afterPath="$PROJECT_DIR$/web/account.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/add_to_cart.php" beforeDir="false" afterPath="$PROJECT_DIR$/web/add_to_cart.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/agb.php" beforeDir="false" afterPath="$PROJECT_DIR$/web/agb.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/checkout.php" beforeDir="false" afterPath="$PROJECT_DIR$/web/checkout.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/css/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/db.php" beforeDir="false" afterPath="$PROJECT_DIR$/web/db.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/get_cart_itmes.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/web/landing_page.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/web/login.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/order_confirmation.php" beforeDir="false" afterPath="$PROJECT_DIR$/web/order_confirmation.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/produkte.php" beforeDir="false" afterPath="$PROJECT_DIR$/web/produkte.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/register.php" beforeDir="false" afterPath="$PROJECT_DIR$/web/register.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/send_emails.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/send_emails.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -184,6 +118,7 @@
       <recent name="$PROJECT_DIR$/src/main/java/ngnvzn/com/ngnvzn_brand/img" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/web/css" />
       <recent name="$PROJECT_DIR$/web" />
       <recent name="$PROJECT_DIR$/web/js" />
       <recent name="$PROJECT_DIR$" />
@@ -192,8 +127,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PS-242.23726.107" />
-        <option value="bundled-php-predefined-a98d8de5180a-90914f2295cb-com.jetbrains.php.sharedIndexes-PS-242.23726.107" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PS-242.24807.17" />
+        <option value="bundled-php-predefined-a98d8de5180a-90914f2295cb-com.jetbrains.php.sharedIndexes-PS-242.24807.17" />
       </set>
     </attachedChunks>
   </component>
@@ -224,7 +159,11 @@
       <workItem from="1732086130505" duration="45000" />
       <workItem from="1732089770517" duration="1000" />
       <workItem from="1732319686247" duration="2918000" />
-      <workItem from="1732805764147" duration="383000" />
+      <workItem from="1732805764147" duration="2731000" />
+      <workItem from="1733654406344" duration="1721000" />
+      <workItem from="1734336789243" duration="677000" />
+      <workItem from="1734512480938" duration="30000" />
+      <workItem from="1734512534593" duration="283000" />
     </task>
     <servers />
   </component>
