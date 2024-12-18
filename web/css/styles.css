@@ -139,6 +139,7 @@ h1 {
     cursor: pointer;
     text-align: center;
     padding: 15px;
+    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sanfter Schatten für Tiefe */
     box-sizing: border-box; /* Einschluss von Padding in der Breite */
 }
 
@@ -152,7 +153,7 @@ h1 {
 
 .product-card:hover {
     transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Stärkerer Schatten bei Hover */
+    /*box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Stärkerer Schatten bei Hover */
 }
 
 .product-card:hover img {
@@ -176,6 +177,15 @@ h1 {
     font-size: 16px;
     margin-top: 10px;
     color: #666; /* Helleres Grau für die Beschreibung */
+}
+
+.product-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Stärkerer Schatten bei Hover */
+}
+
+.product-card:hover img {
+    transform: scale(1.1);
 }
 
 .add-to-cart {
@@ -263,15 +273,14 @@ h1 {
 .product-size::-ms-expand {
     display: none; /* IE10-12 */
 }
-
 /* Footer */
 .footer {
     padding: 20px;
     text-align: center;
-    background-color: #000; /* Schwarzer Footer */
-    color: #fff; /* Weißer Text */
+    background-color: #000;
+    /* Schwarzer Footer */
+    color: #fff; / Weißer Text */
 }
-
 .footer p {
     margin: 0;
     font-size: 16px;
@@ -353,7 +362,6 @@ h1 {
     background-color: #000;
     color: #fff; /* Weißer Text bei Hover */
 }
-
 .navbar .search-cart .cart-icon:hover {
     color: #333;
 }
@@ -369,7 +377,6 @@ h1 {
     font-size: 14px;
     font-weight: bold;
 }
-
 /* Hinzufügen von CSS für das Warenkorb-Overlay */
 .cart-panel {
     position: fixed;
@@ -453,3 +460,39 @@ h1 {
 .checkout-btn:hover {
     background-color: #333; /* Dunkleres Schwarz beim Hover */
 }
+
+.slideshow-container {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    margin: auto;
+}
+
+.slides {
+    display: none;
+}
+
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+}
+
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.prev:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
+}
+
