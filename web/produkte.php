@@ -44,7 +44,6 @@ $cart_count = array_sum(array_column($cart_items, "quantity"));
 // Gesamtanzahl der Artikel im Warenkorb
 ?>
 
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -53,6 +52,7 @@ $cart_count = array_sum(array_column($cart_items, "quantity"));
     <title>Unsere Produkte</title>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
     <link rel="icon" href="img/logo.png" type="image/png">
+
     <style>
         body {
             font-family: 'Lora', serif;
@@ -214,6 +214,11 @@ $cart_count = array_sum(array_column($cart_items, "quantity"));
 
         .product-card:hover img {
             transform: scale(1.1);
+        }
+
+        .product-card a {
+            text-decoration: none; /* Entfernt die Unterstreichung */
+            color: inherit; /* Erbt die Textfarbe */
         }
 
         .product-name {
@@ -553,8 +558,7 @@ $cart_count = array_sum(array_column($cart_items, "quantity"));
         }
     </style>
 </head>
-<body>
-<!-- Navbar -->
+!-- Navbar -->
 <nav class="navbar">
     <div class="nav-links">
         <a href="landing_page.php">Startseite</a>
@@ -583,27 +587,15 @@ $cart_count = array_sum(array_column($cart_items, "quantity"));
     <div class="products-grid">
         <?php foreach ($products as $product): ?>
             <div class="product-card" data-id="<?php echo htmlspecialchars($product["id"]); ?>">
-                <div class="slideshow-container">
-                    <?php foreach (explode(', ', $product['product_images']) as $index => $image): ?>
-                        <div class="slides">
-                            <img src="<?php echo htmlspecialchars($image); ?>" alt="<?php echo htmlspecialchars($product["name"]); ?>" style="width:100%">
-                        </div>
-                    <?php endforeach; ?>
-                    <a class="prev" onclick="plusSlides(-1, <?php echo $product['id']; ?>)">&#10094;</a>
-                    <a class="next" onclick="plusSlides(1, <?php echo $product['id']; ?>)">&#10095;</a>
-                </div>
-                <h2 class="product-name"><?php echo htmlspecialchars($product["name"]); ?></h2>
-                <p class="product-price">Preis: €<?php echo htmlspecialchars($product["price"]); ?></p>
-                <p class="product-description"><?php echo htmlspecialchars($product["description"]); ?></p>
-                <p><strong>Kategorie:</strong> <?php echo htmlspecialchars($product["category"]); ?></p>
-                <!-- Größe auswählen -->
-                <select class="product-size" data-id="<?php echo htmlspecialchars($product["id"]); ?>">
-                    <option value="">Größe wählen</option>
-                    <?php foreach (explode(', ', $product["product_sizes"]) as $size): ?>
-                        <option value="<?php echo htmlspecialchars($size); ?>"><?php echo htmlspecialchars($size); ?></option>
-                    <?php endforeach; ?>
-                </select>
-                <button class="add-to-cart" data-id="<?php echo htmlspecialchars($product["id"]); ?>">In den Warenkorb</button>
+                <a href="product_detail.php?id=<?php echo htmlspecialchars($product["id"]); ?>">
+                    <div class="product-image">
+                        <img src="<?php echo htmlspecialchars(explode(', ', $product['product_images'])[0]); ?>" alt="<?php echo htmlspecialchars($product["name"]); ?>" style="width:100%">
+                    </div>
+                    <h2 class="product-name"><?php echo htmlspecialchars($product["name"]); ?></h2>
+                    <p class="product-price">Preis: €<?php echo htmlspecialchars($product["price"]); ?></p>
+                    <p class="product-description"><?php echo htmlspecialchars($product["description"]); ?></p>
+                    <p><strong>Kategorie:</strong> <?php echo htmlspecialchars($product["category"]); ?></p>
+                </a>
             </div>
         <?php endforeach; ?>
     </div>
@@ -612,44 +604,12 @@ $cart_count = array_sum(array_column($cart_items, "quantity"));
 <footer class="footer">
     <p>© 2024 GOOD DON'T DIE. Alle Rechte vorbehalten. | <a href="agb.php">AGB</a> | <a href="kontakt.php">Kontakt</a></p>
 </footer>
-<script>
+<script type="module">
     document.addEventListener('DOMContentLoaded', function() {
-        const addToCartButtons = document.querySelectorAll('.add-to-cart');
         const cartIcon = document.getElementById('cartIcon');
         const cartPanel = document.getElementById('cartPanel');
         const closeCartPanel = document.getElementById('closeCartPanel');
         const cartItemsContainer = document.getElementById('cartItems');
-
-        let slideIndices = {};
-
-        function showSlides(n, productId) {
-            let i;
-            let slides = document.querySelectorAll(`.product-card[data-id="${productId}"] .slides`);
-            if (!slideIndices[productId]) {
-                slideIndices[productId] = 1;
-            }
-            if (n > slides.length) { slideIndices[productId] = 1 }
-            if (n < 1) { slideIndices[productId] = slides.length }
-            for (i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";
-            }
-            slides[slideIndices[productId] - 1].style.display = "block";
-        }
-
-        window.plusSlides = function(n, productId) {
-            showSlides(slideIndices[productId] += n, productId);
-        }
-
-        document.querySelectorAll('.product-card').forEach(card => {
-            const productId = card.getAttribute('data-id');
-            showSlides(1, productId);
-            card.querySelector('.prev').addEventListener('click', function() {
-                plusSlides(-1, productId);
-            });
-            card.querySelector('.next').addEventListener('click', function() {
-                plusSlides(1, productId);
-            });
-        });
 
         function updateCartPanel() {
             const url = '/get_cart_items.php'; // Ensure this URL is correct
@@ -687,42 +647,6 @@ $cart_count = array_sum(array_column($cart_items, "quantity"));
                     console.error('Error fetching cart data:', error);
                 });
         }
-
-        addToCartButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const productId = this.getAttribute('data-id');
-                const sizeSelect = this.previousElementSibling;
-                const size = sizeSelect ? sizeSelect.value : '';
-
-                if (!size) {
-                    alert('Please select a size before adding the product to the cart.');
-                    return;
-                }
-
-                console.log(`Adding product ${productId} with size ${size} to cart`);
-
-                fetch('/add_to_cart.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: `product_id=${productId}&size=${size}`
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log('Response data:', data);
-                        if (data.success) {
-                            console.log('Product added to cart successfully');
-                            updateCartPanel(); // Update the cart panel after adding a product
-                        } else {
-                            console.error('Error adding product to cart:', data.message);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error adding product to cart:', error);
-                    });
-            });
-        });
 
         cartIcon.addEventListener('click', function() {
             updateCartPanel(); // Update the cart panel when opening
