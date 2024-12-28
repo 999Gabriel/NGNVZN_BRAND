@@ -22,7 +22,7 @@ try {
 
 // Produkte abrufen
 $queryStr = "SELECT p.id, p.name, p.description, p.price, c.name AS category,
-                    GROUP_CONCAT(DISTINCT ps.size SEPARATOR ', ') AS product_sizes,
+                    GROUP_CONCAT(DISTINCT ps.size ORDER BY ps.size SEPARATOR ', ') AS product_sizes,
                     GROUP_CONCAT(DISTINCT pi.image_url SEPARATOR ', ') AS product_images
              FROM products p
              JOIN categories c ON p.category_id = c.id
@@ -558,6 +558,7 @@ $cart_count = array_sum(array_column($cart_items, "quantity"));
         }
     </style>
 </head>
+<body>
 !-- Navbar -->
 <nav class="navbar">
     <div class="nav-links">
@@ -600,6 +601,7 @@ $cart_count = array_sum(array_column($cart_items, "quantity"));
         <?php endforeach; ?>
     </div>
 </div>
+
 <!-- Footer -->
 <footer class="footer">
     <p>© 2024 GOOD DON'T DIE. Alle Rechte vorbehalten. | <a href="agb.php">AGB</a> | <a href="kontakt.php">Kontakt</a></p>
@@ -612,16 +614,15 @@ $cart_count = array_sum(array_column($cart_items, "quantity"));
         const cartItemsContainer = document.getElementById('cartItems');
 
         function updateCartPanel() {
-            const url = '/get_cart_items.php'; // Ensure this URL is correct
+            const url = '/get_cart_items.php';
             fetch(url)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
-                    return response.json(); // Get the response as JSON
+                    return response.json();
                 })
                 .then(data => {
-                    console.log('Cart items:', data);
                     if (Array.isArray(data.cartItems)) {
                         cartItemsContainer.innerHTML = '';
                         data.cartItems.forEach(item => {
@@ -633,11 +634,32 @@ $cart_count = array_sum(array_column($cart_items, "quantity"));
                             <div class="item-details">
                                 <p class="item-name">${item.name || 'No Name'}</p>
                                 <p class="item-price">€${item.price || '0.00'}</p>
-                                <p class="item-quantity">Quantity: ${item.quantity || '0'}</p>
+                                <p class="item-quantity">
+                                    Quantity:
+                                    <input type="number" class="quantity-input" value="${item.quantity || '0'}" min="1" data-id="${item.id}">
+                                </p>
                                 <p class="item-size">Size: ${item.size || 'N/A'}</p>
+                                <button class="delete-btn" data-id="${item.id}">Delete</button>
                             </div>
                         `;
                             cartItemsContainer.appendChild(itemElement);
+                        });
+
+                        document.querySelectorAll('.quantity-input').forEach(input => {
+                            input.addEventListener('change', function() {
+                                const productId = this.getAttribute('data-id');
+                                const newQuantity = this.value;
+                                console.log(`Updating product ${productId} to quantity ${newQuantity}`);
+                                updateCartItem(productId, newQuantity);
+                            });
+                        });
+
+                        document.querySelectorAll('.delete-btn').forEach(button => {
+                            button.addEventListener('click', function() {
+                                const productId = this.getAttribute('data-id');
+                                console.log(`Deleting product ${productId}`);
+                                deleteCartItem(productId);
+                            });
                         });
                     } else {
                         console.error('Error fetching cart items:', data.error);
@@ -648,8 +670,49 @@ $cart_count = array_sum(array_column($cart_items, "quantity"));
                 });
         }
 
+        function updateCartItem(productId, quantity) {
+            fetch('/update_cart_item.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `product_id=${productId}&quantity=${quantity}`
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log('Cart updated successfully.');
+                        updateCartPanel();
+                    } else {
+                        console.error('Error updating cart:', data.error);
+                    }
+                })
+                .catch(error => console.error('Error updating cart item:', error));
+        }
+
+        function deleteCartItem(productId) {
+            console.log(`Sending request to delete product ${productId}`);
+            fetch('/delete_cart_item.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `product_id=${productId}`
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log('Item deleted successfully.');
+                        updateCartPanel();
+                    } else {
+                        console.error('Error deleting item:', data.error);
+                    }
+                })
+                .catch(error => console.error('Error deleting cart item:', error));
+        }
+
         cartIcon.addEventListener('click', function() {
-            updateCartPanel(); // Update the cart panel when opening
+            updateCartPanel();
             cartPanel.classList.toggle('open');
         });
 

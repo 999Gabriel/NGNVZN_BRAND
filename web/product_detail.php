@@ -321,6 +321,8 @@ if (!$product) {
                 .then(data => {
                     if (data.success) {
                         alert('Produkt erfolgreich in den Warenkorb gelegt.');
+                        updateCartPanel();
+                        document.getElementById('cartPanel').classList.add('open'); // Open the cart modal
                     } else {
                         alert('Fehler beim Hinzufügen des Produkts in den Warenkorb.');
                     }
@@ -329,6 +331,30 @@ if (!$product) {
                     console.error('Fehler beim Hinzufügen des Produkts in den Warenkorb:', error);
                 });
         });
+
+        function updateCartPanel() {
+            const cartItemsContainer = document.getElementById('cartItems');
+            fetch('/get_cart_items.php')
+                .then(response => response.json())
+                .then(data => {
+                    cartItemsContainer.innerHTML = '';
+                    data.cartItems.forEach(item => {
+                        const itemElement = document.createElement('div');
+                        itemElement.classList.add('cart-item');
+                        itemElement.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}">
+                        <div class="item-details">
+                            <p class="item-name">${item.name}</p>
+                            <p class="item-price">€${item.price}</p>
+                            <p class="item-quantity">Quantity: ${item.quantity}</p>
+                            <p class="item-size">Size: ${item.size}</p>
+                        </div>
+                    `;
+                        cartItemsContainer.appendChild(itemElement);
+                    });
+                })
+                .catch(error => console.error('Error fetching cart data:', error));
+        }
     });
 </script>
 </body>

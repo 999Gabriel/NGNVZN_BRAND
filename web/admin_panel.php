@@ -24,7 +24,7 @@ $query = $pdo->query("SELECT * FROM products");
 $products = $query->fetchAll(PDO::FETCH_ASSOC);
 
 // Fetch purchase data
-$query = $pdo->query("SELECT * FROM purchases");
+$query = $pdo->query("SELECT * FROM orders");
 $purchases = $query->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
@@ -33,6 +33,8 @@ $purchases = $query->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Admin Panel</title>
+    <link rel="icon" href="img/logo.png" type="image/png">
+    <link rel="stylesheet" href="css/admin_style.css">
 </head>
 <body>
 <h2>Admin Panel</h2>
